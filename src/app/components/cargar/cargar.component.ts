@@ -61,7 +61,7 @@ export class CargarComponent {
         res => {  
           debugger;          
           if(res['estado']=='Exito'){
-            alert('Vídeo fue procesaro');
+            alert(res['mensaje']);
           }
         }
       ); 

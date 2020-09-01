@@ -3,6 +3,7 @@ import { FileUploader } from 'ng2-file-upload';
 import { UserService } from '../../services/user.service';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { global } from '../../services/global';
+import { Router, ActivatedRoute } from '@angular/router';
  
 @Component({
   selector: 'app-cargar',
@@ -27,7 +28,7 @@ export class CargarComponent {
       itemAlias: 'adjuntos'
   });
 
-  constructor(private http: HttpClient, private _user: UserService) { 
+  constructor(private _router: Router, private http: HttpClient, private _user: UserService) { 
     this.title = " Reconocimiento de emociones";
   }
 
@@ -61,7 +62,12 @@ export class CargarComponent {
         res => {  
           debugger;          
           if(res['estado']=='Exito'){
-            alert(res['mensaje']);
+            if (res['proceso'] != "") {
+              this._router.navigate(["/grafica/"+res['proceso']]);
+              alert(res['mensaje']);
+            } else {
+              alert('Error al generar el proceso');
+            }
           }
         }
       ); 

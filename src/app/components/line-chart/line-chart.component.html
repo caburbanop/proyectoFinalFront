@@ -1,6 +1,6 @@
 <div class="flex">
   <div class="flex-item">
-    <div style="display: block; width: 1100px; height: 300px;">
+    <div style="display: block; width: 1100px; height: 300px; overflow-x: scroll">
       <canvas baseChart width="1100" height="300"
                 [datasets]="lineChartData"
                 [labels]="lineChartLabels"
@@ -14,7 +14,7 @@
       </canvas>
     </div>
   </div>
-  <div class="flex-item">
+  <!--div class="flex-item">
     <table class="table table-responsive table-condensed">
       <tr>
         <th *ngFor="let label of lineChartLabels">{{label}}</th>
@@ -23,11 +23,12 @@
         <td *ngFor="let label of lineChartLabels; let j=index">{{d && d.data[j]}}</td>
       </tr>
     </table>
+    <button mat-button mat-raised-button color="primary" (click)="pushOne()">Push</button>
     <!--button mat-button mat-raised-button color="primary" (click)="randomize()">Randomize</button>
     <button mat-button mat-raised-button color="primary" (click)="pushOne()">Push</button>
     <button mat-button mat-raised-button color="primary" (click)="changeColor()">Recolor</button>
     <button mat-button mat-raised-button color="primary" (click)="hideOne()">Toggle Series B</button>
     <button mat-button mat-raised-button color="primary" (click)="changeLabel()">Change Label</button>
     <button mat-button mat-raised-button color="primary" [routerLink]="['/cargar']">Volver</button-->
-  </div>
+  <!--/div-->
 </div>

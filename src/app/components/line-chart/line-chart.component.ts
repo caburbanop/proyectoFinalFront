@@ -13,10 +13,13 @@ import * as pluginAnnotations from 'chartjs-plugin-annotation';
 })
 export class LineChartComponent implements OnInit {
   public lineChartData: ChartDataSets[] = [
+    { data: [], label: 'Enojo' },
+    { data: [], label: 'Disgusto' },
+    { data: [], label: 'Miedo' },
     { data: [], label: 'Feliz' },
-    { data: [], label: 'Enojado' },
-    //{ data: [28, 48, 40, 19, 86, 27, 90], label: 'Series B' },
-    //{ data: [80, 80, 70, 90, 10, 27, 40], label: 'Series C', yAxisID: 'y-axis-1' }
+    { data: [], label: 'Tristeza' },
+    { data: [], label: 'Sorpresa' },
+    { data: [], label: 'Neutral' },
   ];
   public lineChartLabels: Label[] = [];//'10', '20', '30', '40', '50', '60', '70'];
   public lineChartOptions: (ChartOptions & { annotation: any }) = {
@@ -60,6 +63,15 @@ export class LineChartComponent implements OnInit {
     },
   };
   public lineChartColors: Color[] = [
+    {borderColor: 'red'},
+    {borderColor: 'orange'},
+    {borderColor: 'purple'},
+    {borderColor: 'green'},
+    {borderColor: 'blue'},
+    {borderColor: 'yellow'},
+    {borderColor: 'rgba(148,159,177,1)'}
+  ];
+  /*public lineChartColors: Color[] = [
     { // grey
       backgroundColor: 'rgba(148,159,177,0.2)',
       borderColor: 'rgba(148,159,177,1)',
@@ -84,7 +96,7 @@ export class LineChartComponent implements OnInit {
       pointHoverBackgroundColor: '#fff',
       pointHoverBorderColor: 'rgba(148,159,177,0.8)'
     }
-  ];
+  ];*/
   public lineChartLegend = true;
   public lineChartType = 'line';
   public lineChartPlugins = [pluginAnnotations];
@@ -107,25 +119,35 @@ export class LineChartComponent implements OnInit {
     this._user.post('consultarInfo', arrDatos).subscribe(
       res => {  
         debugger;
-        if(res['estado']=='Exito'){
-          var i = 0;
-          while (i < 3) {
-            if(res['estado']=='Exito') {
-              this.pushOne();
-              i = i + 1;
-              this._user.post('consultarInfo', arrDatos).subscribe(
-                res => {  
-                  debugger;                  
-                }
-              );
-            } else {
-              i = 3;
+        if(res['estado'] == 'Exito' && res['datos'] != ''){
+          var lineas = res['datos'].split('\n');
+          for (var i=0; i<lineas.length; i++) {
+            if (lineas[i] != "") {
+              var datos = lineas[i].split(',');
+              var arreglo = [];
+              arreglo[0] = datos[1] * 100;
+              arreglo[1] = datos[2] * 100;
+              arreglo[2] = datos[3] * 100;
+              arreglo[3] = datos[4] * 100;
+              arreglo[4] = datos[5] * 100;
+              arreglo[5] = datos[6] * 100;
+              arreglo[6] = datos[7] * 100; 
+              this.pushOneData(datos[0], arreglo);
             }
           }
-          alert(res['mensaje']);
         }
       }
     );
+  }
+
+  public pushOneData(label, datos) {
+    debugger;
+    this.lineChartData.forEach((x, i) => {
+      const num = datos[i];
+      const data: number[] = x.data as number[];
+      data.push(num);
+    });
+    this.lineChartLabels.push(label);
   }
 
   public randomize(): void {
@@ -156,6 +178,7 @@ export class LineChartComponent implements OnInit {
   }
 
   public pushOne() {
+    debugger;
     this.lineChartData.forEach((x, i) => {
       const num = this.generateNumber(i);
       const data: number[] = x.data as number[];

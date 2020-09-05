@@ -64,7 +64,7 @@ export class CargarComponent {
           if(res['estado']=='Exito'){
             if (res['proceso'] != "") {
               this._router.navigate(["/grafica/"+res['proceso']]);
-              alert(res['mensaje']);
+              alert(res['mensaje']+res['proceso']);
             } else {
               alert('Error al generar el proceso');
             }

@@ -103,18 +103,20 @@ export class LineChartComponent implements OnInit {
 
   // Identificador del proceso
   public id;
+  public tipo;
 
   @ViewChild(BaseChartDirective, { static: true }) chart: BaseChartDirective;
 
   constructor(private _user: UserService, private ruta: ActivatedRoute) { 
     debugger;
     this.id = this.ruta.snapshot.paramMap.get('id');
+    this.tipo = this.ruta.snapshot.paramMap.get('tipo');
   }
 
   ngOnInit() {
     debugger;
     var arrDatos = {};
-    arrDatos['tipo'] = "facial";
+    arrDatos['tipo'] = this.tipo;
     arrDatos['proceso'] = this.id;
     this._user.post('consultarInfo', arrDatos).subscribe(
       res => {  
@@ -125,13 +127,23 @@ export class LineChartComponent implements OnInit {
             if (lineas[i] != "") {
               var datos = lineas[i].split(',');
               var arreglo = [];
-              arreglo[0] = datos[1] * 100;
-              arreglo[1] = datos[2] * 100;
-              arreglo[2] = datos[3] * 100;
-              arreglo[3] = datos[4] * 100;
-              arreglo[4] = datos[5] * 100;
-              arreglo[5] = datos[6] * 100;
-              arreglo[6] = datos[7] * 100; 
+              if (res['tipo'] == 'habla') {
+                arreglo[0] = datos[4] * 100;
+                arreglo[1] = 0 * 100;
+                arreglo[2] = datos[5] * 100;
+                arreglo[3] = datos[2] * 100;
+                arreglo[4] = datos[3] * 100;
+                arreglo[5] = 0 * 100;
+                arreglo[6] = datos[1] * 100; 
+              } else {
+                arreglo[0] = datos[1] * 100;
+                arreglo[1] = datos[2] * 100;
+                arreglo[2] = datos[3] * 100;
+                arreglo[3] = datos[4] * 100;
+                arreglo[4] = datos[5] * 100;
+                arreglo[5] = datos[6] * 100;
+                arreglo[6] = datos[7] * 100; 
+              }
               this.pushOneData(datos[0], arreglo);
             }
           }

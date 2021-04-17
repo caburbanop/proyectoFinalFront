@@ -54,16 +54,18 @@ export class CargarComponent {
     };
   }
 
-  public reconocimientoFacial(){
+  public reconocimiento(tipo){
+    debugger;
     var arrDatos = {};
     if ((this.archivos.length == this.uploader.queue.length) && (this.archivos.length > 0)){
       arrDatos['video'] = this.archivos;
+      arrDatos['tipo'] = tipo;
       this._user.post('default', arrDatos).subscribe(
         res => {  
           debugger;          
           if(res['estado']=='Exito'){
             if (res['proceso'] != "") {
-              this._router.navigate(["/grafica/"+res['proceso']]);
+              this._router.navigate(["/grafica/"+res['proceso']+"/"+res['tipo']]);
               alert(res['mensaje']+res['proceso']);
             } else {
               alert('Error al generar el proceso');
@@ -72,7 +74,7 @@ export class CargarComponent {
         }
       ); 
     } else {
-      alert('No se ha subido ningún video');
+      alert('No se ha subido ningún archivo');
     }
   }
 

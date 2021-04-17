@@ -8,7 +8,7 @@ import { HomeComponent } from './components/home/home.component';
 const appRoutes: Routes = [
     {path: '', component: CargarComponent},
     {path: 'cargar', component: CargarComponent},
-    {path: 'grafica/:id', component: LineChartComponent}
+    {path: 'grafica/:id/:tipo', component: LineChartComponent}
 ];
 
 export const appRoutingProviders: any[] = [];

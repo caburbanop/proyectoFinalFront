@@ -1,9 +1,12 @@
 <div class="col-md-12 mt-3">
     <h2>{{title}}</h2>
     <hr>
+    <div id="loading" class="col-md-12 mt-3" *ngIf="cargando">
+        <img src="../../../assets/images/loader.gif" />
+    </div>    
     <div class="col-md-2"><h5 class="subtitle" for="adjuntos">Video :</h5></div>
     <div class="col-md-8">
-        <input type="file" name="adjuntos" ng2FileSelect [uploader]="uploader" />
+        <input [disabled]="habilitar" type="file" name="adjuntos" ng2FileSelect [uploader]="uploader" />
     </div> 
 
     <div class="col-md-12 mt-5">
@@ -20,7 +23,7 @@
                     <td>{{ item?.file?.name }}</td>
                     <td>{{ item?.file?.size/1024/1024 | number:'.2' }} MB</td>
                     <td>
-                        <button type="button" class="btn btn-danger btn-xs" (click)="eliminar(item)">
+                        <button [disabled]="habilitar" type="button" class="btn btn-danger btn-xs" (click)="eliminar(item)">
                         <span class="glyphicon glyphicon-trash"></span>Eliminar
                         </button>
                     </td>
@@ -32,17 +35,17 @@
     <div class="container col-md-5 mt-5">
         <div class="row mt-1">
             <div class="col text-center">
-                <button class="btn btn-success" (click)="reconocimiento('facial')">Reconocimiento facial</button>
+                <button [disabled]="habilitar" class="btn btn-success" (click)="reconocimiento('facial')">Reconocimiento facial</button>
             </div>
         </div>
         <div class="row mt-1">
             <div class="col text-center">
-                <button class="btn btn-success" (click)="reconocimiento('habla')">Reconocimiento habla</button>
+                <button [disabled]="habilitar" class="btn btn-success" (click)="reconocimiento('habla')">Reconocimiento habla</button>
             </div>
         </div>
         <div class="row mt-1">
             <div class="col text-center">
-                <button class="btn btn-success" (click)="reconocimiento('facial-habla')">Reconocimiento facial/habla</button>
+                <button [disabled]="habilitar" class="btn btn-success" (click)="reconocimiento('facial-habla')">Reconocimiento facial/habla</button>
             </div>
         </div>
     </div>

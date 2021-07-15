@@ -18,6 +18,8 @@ export class CargarComponent {
  
   public archivos = [];   
   public title:string;
+  public cargando:boolean;
+  public habilitar: boolean;
     
   public uploader: FileUploader = new FileUploader({
       url: global.url+'upload',
@@ -30,6 +32,8 @@ export class CargarComponent {
 
   constructor(private _router: Router, private http: HttpClient, private _user: UserService) { 
     this.title = " Reconocimiento de emociones";
+    this.cargando = false;
+    this.habilitar = false;
   }
 
   ngOnInit() {
@@ -38,7 +42,8 @@ export class CargarComponent {
         file.withCredentials = false; 
     };
     this.uploader.onCompleteItem = (item: any, response: any, status: any, headers: any) => {
-        var res = JSON.parse(response);
+        debugger;
+        var res = JSON.parse(response);        
         if(res['estado']=='Exito'){
           debugger;
           if (this.uploader.queue.length > 1) {
@@ -60,13 +65,16 @@ export class CargarComponent {
     if ((this.archivos.length == this.uploader.queue.length) && (this.archivos.length > 0)){
       arrDatos['video'] = this.archivos;
       arrDatos['tipo'] = tipo;
+      this.cargando = true;
+      this.habilitar = true;
       this._user.post('default', arrDatos).subscribe(
         res => {  
-          debugger;          
+          debugger;
+          this.cargando = false;
           if(res['estado']=='Exito'){
             if (res['proceso'] != "") {
               this._router.navigate(["/grafica/"+res['proceso']+"/"+res['tipo']]);
-              alert(res['mensaje']+res['proceso']);
+              //alert(res['mensaje']+res['proceso']);
             } else {
               alert('Error al generar el proceso');
             }

@@ -1,0 +1,8 @@
+#container {
+    height: 200px;
+    overflow: auto;
+    border: 1px solid;
+}
+#canvas{
+    display: block;
+}

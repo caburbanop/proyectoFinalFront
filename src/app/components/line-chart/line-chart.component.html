@@ -1,18 +1,23 @@
-<div class="flex">
+<div style="width: 100%; overflow-x: auto; overflow-y: hidden">
+  <div style="width: 3000px; height: 450px">
+    <canvas id="canvas" baseChart width="5000" height="0"
+            [datasets]="lineChartData"
+            [labels]="lineChartLabels"
+            [options]="lineChartOptions"
+            [colors]="lineChartColors"
+            [legend]="lineChartLegend"
+            [chartType]="lineChartType"
+            [plugins]="lineChartPlugins"
+            (chartHover)="chartHovered($event)"
+            (chartClick)="chartClicked($event)">
+    </canvas>
+  </div>
+</div>
+<br>
+<button class="btn btn-success" [routerLink]="['/cargar']">Volver</button>
+<!--div class="flex">
   <div class="flex-item">
-    <div style="display: block; width: 1100px; height: 300px; overflow-x: scroll">
-      <canvas baseChart width="1100" height="300"
-                [datasets]="lineChartData"
-                [labels]="lineChartLabels"
-                [options]="lineChartOptions"
-                [colors]="lineChartColors"
-                [legend]="lineChartLegend"
-                [chartType]="lineChartType"
-                [plugins]="lineChartPlugins"
-                (chartHover)="chartHovered($event)"
-                (chartClick)="chartClicked($event)">
-      </canvas>
-    </div>
+    
   </div>
   <!--div class="flex-item">
     <table class="table table-responsive table-condensed">
@@ -30,5 +35,5 @@
     <button mat-button mat-raised-button color="primary" (click)="hideOne()">Toggle Series B</button>
     <button mat-button mat-raised-button color="primary" (click)="changeLabel()">Change Label</button>
     <button mat-button mat-raised-button color="primary" [routerLink]="['/cargar']">Volver</button-->
-  <!--/div-->
-</div>
+  <!--/div>
+</div-->
